@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+</head>
+<body>
+    <h1>Clients</h1>
+    <form th:action="@{/clients}" method="post">
+    <label for="name">Client name</label>
+    <input id="name" name="name" type="text" th:value="${enteredName}">
+    <button type="submit">Add client</button>
+</form>
+
+<p th:if="${error}" th:text="${error}"></p>
+
+    <p th:if="${#lists.isEmpty(clients)}">No clients yet.</p>
+
+    <ul>
+        <li th:each="client : ${clients}" th:text="${client.name}"></li>
+    </ul>
+</body>
+</html>
