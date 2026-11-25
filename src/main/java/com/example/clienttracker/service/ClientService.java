@@ -11,25 +11,37 @@ public class ClientService {
     private final List<Client> clients = new ArrayList<>();
     private long nextId = 1;
 
-public synchronized Client addClient(String name) {
-    if (name == null || name.isBlank()) {
-        throw new IllegalArgumentException("Enter a client name.");
-    }
-
-    String cleanName = name.trim();
-
-    for (Client existingClient : clients) {
-        if (existingClient.getName().equalsIgnoreCase(cleanName)) {
-            throw new IllegalArgumentException("A client with this name already exists.");
+    public synchronized Client addClient(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Enter a client name.");
         }
+
+        String cleanName = name.trim();
+
+        for (Client existingClient : clients) {
+            if (existingClient.getName().equalsIgnoreCase(cleanName)) {
+                throw new IllegalArgumentException("A client with this name already exists.");
+            }
+        }
+
+        Client client = new Client(nextId, cleanName);
+        clients.add(client);
+        nextId++;
+        return client;
     }
 
-    Client client = new Client(nextId, cleanName);
-    clients.add(client);
-    nextId++;
-    return client;
-}   
     public synchronized List<Client> getClients() {
-    return List.copyOf(clients);
-}
+        return List.copyOf(clients);
+    }
+
+    public synchronized Client findById(long id) {
+        for (Client client : clients) {
+            if (client.getId() == id) {
+                return client;
+            }
+        }
+
+        throw new IllegalArgumentException("The selected client could not be found.");
+    }
+
 }

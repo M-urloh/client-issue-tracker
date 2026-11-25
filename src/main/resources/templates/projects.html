@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+</head>
+
+<body>
+    <h1>Projects</h1>
+
+    <p th:if="${#lists.isEmpty(clients)}">
+        <a th:href="@{/clients}">Add a client</a> to create your first project.
+    </p>
+
+    <form th:unless="${#lists.isEmpty(clients)}" th:action="@{/projects}" method="post">
+        <label for="clientId">Client</label>
+        <select id="clientId" name="clientId">
+            <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"
+                th:selected="${client.id == selectedClientId}">
+            </option>
+        </select>
+
+        <label for="name">Project name</label>
+        <input id="name" name="name" type="text" th:value="${enteredName}">
+
+        <button type="submit">Add project</button>
+        <p th:if="${error}" th:text="${error}"></p>
+    </form>
+
+    <h2>Project list</h2>
+    <p th:if="${#lists.isEmpty(projects)}">No projects yet.</p>
+    <ul>
+        <li th:each="project : ${projects}">
+            <span th:text="${project.name}"></span>
+            (<span th:text="${project.client.name}"></span>)
+        </li>
+    </ul>
+</body>
+
+</html>
