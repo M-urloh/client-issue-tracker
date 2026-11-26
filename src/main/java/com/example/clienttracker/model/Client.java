@@ -2,7 +2,11 @@ package com.example.clienttracker.model;
 
 public class Client {
     private final long id;
-    private final String name;
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Client(long id, String name) {
         this.id = id;
