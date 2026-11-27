@@ -6,6 +6,10 @@ public class Project {
     private final String name;
     private boolean active = true;
 
+    public void deactivate() {
+        this.active = false;
+    }
+
     public Project(long id, Client client, String name) {
         this.id = id;
         this.client = client;

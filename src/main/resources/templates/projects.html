@@ -34,6 +34,11 @@
         <li th:each="project : ${projects}">
             <span th:text="${project.name}"></span>
             (<span th:text="${project.client.name}"></span>)
+            — <span th:text="${project.active ? 'Active' : 'Inactive'}"></span>
+
+            <form th:if="${project.active}" th:action="@{/projects/{id}/deactivate(id=${project.id})}" method="post">
+                <button type="submit">Deactivate</button>
+            </form>
         </li>
     </ul>
 </body>
