@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Edit client</title>
+</head>
+
+<body>
+    <h1>Edit client</h1>
+    <form th:action="@{/clients/{id}/edit(id=${client.id})}" method="post">
+        <label for="name">Client name</label>
+        <input id="name" name="name" type="text" th:value="${enteredName != null ? enteredName : client.name}">
+        <p th:if="${error}" th:text="${error}"></p>
+        <button type="submit">Save changes</button>
+    </form>
+    <a th:href="@{/clients}">Back to clients</a>
+</body>
+
+</html>
