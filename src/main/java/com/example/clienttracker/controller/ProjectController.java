@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ProjectController {
@@ -36,6 +37,17 @@ public class ProjectController {
             model.addAttribute("error", error.getMessage());
             model.addAttribute("selectedClientId", clientId);
             model.addAttribute("enteredName", name);
+            return showProjects(model);
+        }
+    }
+
+    @PostMapping("/projects/{id}/deactivate")
+    public String deactivateProject(@PathVariable("id") long id, Model model) {
+        try {
+            projectService.deactivateProject(id);
+            return "redirect:/projects";
+        } catch (IllegalArgumentException error) {
+            model.addAttribute("error", error.getMessage());
             return showProjects(model);
         }
     }

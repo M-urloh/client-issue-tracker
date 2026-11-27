@@ -43,4 +43,16 @@ public class ProjectService {
     public synchronized List<Project> getProjects() {
         return List.copyOf(projects);
     }
+
+    public synchronized void deactivateProject(long id) {
+        for (Project project : projects) {
+            if (project.getId() == id) {
+                project.deactivate();
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException("The selected project could not be found.");
+    }
+
 }
